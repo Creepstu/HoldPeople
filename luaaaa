@@ -1,0 +1,153 @@
+local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+
+local w = library:CreateWindow("HPTG [VC]")
+
+local b = w:CreateFolder("Cheats")
+
+local c = w:CreateFolder("ReadMe")
+
+function Teleport(teleportPlace)
+	local player = game.Players.LocalPlayer
+	player.Character.HumanoidRootPart.CFrame = teleportPlace
+end
+
+b:Button("Lower Lag",function()
+    for _, obj in ipairs(game:GetDescendants()) do
+	    if obj:IsA("BasePart") or obj:IsA("SpawnLocation") then
+	        obj.CastShadow = false
+	    end
+	end
+
+	local function removePartsWithPointLight(parent)
+    for _, child in ipairs(parent:GetChildren()) do
+        if child:IsA("Part") then
+            local pointLight = child:FindFirstChildOfClass("PointLight")
+            if pointLight then
+                child:Destroy()
+            elseif child.Material == Enum.Material.Neon then
+                child.Material = Enum.Material.Plastic
+            end
+        end
+        removePartsWithPointLight(child)
+    end
+	end
+
+	removePartsWithPointLight(workspace)
+
+	game:GetService("Lighting")["Afternoon Sky"]:Destroy()
+	game:GetService("Lighting").GlobalShadows = false
+end)
+
+b:Button("Remove All Tools",function()
+   local getchi = game.Players.LocalPlayer.Backpack
+   for i, v in pairs(getchi:GetChildren()) do
+   		v:Destroy()
+   end
+end)
+
+b:Button("Shift To Run",function()
+    local Players = game:service("Players")
+	local Player = Players.LocalPlayer
+	local userInput = game:service("UserInputService")
+	local runService = game:service("RunService")
+	repeat wait() until Player.Character
+	local Character = Player.Character
+	local pHum = Character:WaitForChild("Humanoid")
+	local humRoot = Character:WaitForChild("HumanoidRootPart")
+	local Multiplier = 1
+	
+	userInput.InputBegan:connect(function(Key)
+	if Key.KeyCode == Enum.KeyCode.LeftBracket then
+	Multiplier = Multiplier + 0
+	wait(0.2)
+	while userInput:IsKeyDown(Enum.KeyCode.LeftBracket) do
+	wait()
+	Multiplier = Multiplier + 0
+	end
+	end
+	
+	if Key.KeyCode == Enum.KeyCode.RightBracket then
+	Multiplier = Multiplier - 0
+	wait(0.2)
+	while userInput:IsKeyDown(Enum.KeyCode.RightBracket) do
+	wait()
+	Multiplier = Multiplier - 0
+	end
+	end
+	end)
+	
+	runService.Stepped:connect(function()
+	if userInput:IsKeyDown(Enum.KeyCode.LeftShift) then
+	humRoot.CFrame = humRoot.CFrame + pHum.MoveDirection * Multiplier
+	end
+	end)
+end)
+
+b:Button("Sword Teleport",function()
+	Teleport(game:GetService("Workspace").Sword.Part.CFrame)
+end)
+
+b:Slider("Jump Power",{
+    min = 50;
+    max = 150;
+    precise = false;
+    },function(value)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+end)
+
+b:Toggle("Auto Time Farm [BOTH]",function(bool)
+	shared.toggle = bool
+    while shared.toggle do
+    	wait()
+    	Teleport(game:GetService("Workspace").Win.CFrame)
+    	wait()
+    	Teleport(game:GetService("Workspace").Win2.CFrame)
+    end
+end)
+
+b:Box("Chat:","string",function(value)
+    local args = {
+	[1] = value,
+	[2] = "All"
+	}
+	game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(unpack(args))
+end)
+
+b:Box("Audio Trolling:","string",function(value)
+    local soundId = value
+	
+	local properties = {
+		Pitch = 1,
+		Parent = workspace,
+		Volume = 0.5, -- 0 - 10
+		Looped = false,
+		PlayOnRemove = true,
+		TimePosition = math.huge
+	}
+	
+	local localSound = Instance.new("Sound")
+	localSound.SoundId = "rbxassetid://"..soundId
+	for index, value in pairs(properties) do
+		localSound[index] = value
+	end
+	game:GetService("ReplicatedStorage").gabjef:FireServer(soundId, properties)
+	localSound:Play()
+	localSound.Ended:Connect(function()
+		localSound:Destroy()
+	end)
+	task.wait(4)
+	localSound:Destroy()
+end)
+
+c:Button("Infinite Yield",function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+c:Label("Call: +6019-241 2392",{
+    TextSize = 14;
+    TextColor = Color3.fromRGB(255,255,255);
+    BgColor = Color3.fromRGB(65,65,65);
+    
+})
+
+c:DestroyGui()
