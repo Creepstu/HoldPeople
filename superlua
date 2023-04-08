@@ -1,18 +1,14 @@
-local library = loadstring(game:HttpGet(('https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/wall%20v3')))()
+local Lib = loadstring(game:HttpGet("https://raw.githubusercontent.com/bloodball/-back-ups-for-libs/main/modern"))()
 
-local w = library:CreateWindow("HPTG [VC]")
-
-local b = w:CreateFolder("Cheats")
-
-local c = w:CreateFolder("ReadMe")
+local ExampleTab = Lib:Tab("HPTG [VC]")
 
 function Teleport(teleportPlace)
 	local player = game.Players.LocalPlayer
 	player.Character.HumanoidRootPart.CFrame = teleportPlace
 end
 
-b:Button("Lower Lag",function()
-    for _, obj in ipairs(game:GetDescendants()) do
+ExampleTab:Button("Lower Lag", function()
+	for _, obj in ipairs(game:GetDescendants()) do
 	    if obj:IsA("BasePart") or obj:IsA("SpawnLocation") then
 	        obj.CastShadow = false
 	    end
@@ -38,15 +34,15 @@ b:Button("Lower Lag",function()
 	game:GetService("Lighting").GlobalShadows = false
 end)
 
-b:Button("Remove All Tools",function()
-   local getchi = game.Players.LocalPlayer.Backpack
-   for i, v in pairs(getchi:GetChildren()) do
+ExampleTab:Button("Remove All Tools", function()
+	local getchi = game.Players.LocalPlayer.Backpack
+   	for i, v in pairs(getchi:GetChildren()) do
    		v:Destroy()
-   end
+   	end
 end)
 
-b:Button("Shift To Run",function()
-    local Players = game:service("Players")
+ExampleTab:Button("Shift To Run", function()
+	local Players = game:service("Players")
 	local Player = Players.LocalPlayer
 	local userInput = game:service("UserInputService")
 	local runService = game:service("RunService")
@@ -83,38 +79,24 @@ b:Button("Shift To Run",function()
 	end)
 end)
 
-b:Button("Sword Teleport",function()
+ExampleTab:Button("Sword Teleport", function()
 	Teleport(game:GetService("Workspace").Sword.Part.CFrame)
 end)
 
-b:Slider("Jump Power",{
-    min = 50;
-    max = 150;
-    precise = false;
-    },function(value)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = value
+ExampleTab:TextBox("Jump Power:", function(text)
+	game.Players.LocalPlayer.Character.Humanoid.JumpPower = text
 end)
 
-b:Toggle("Auto Time Farm [BOTH]",function(bool)
-	shared.toggle = bool
-    while shared.toggle do
-    	wait()
-    	Teleport(game:GetService("Workspace").Win.CFrame)
-    	wait()
-    	Teleport(game:GetService("Workspace").Win2.CFrame)
-    end
-end)
-
-b:Box("Chat:","string",function(value)
-    local args = {
-	[1] = value,
+ExampleTab:TextBox("Chat:", function(text)
+	local args = {
+	[1] = text,
 	[2] = "All"
 	}
 	game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents"):WaitForChild("SayMessageRequest"):FireServer(unpack(args))
 end)
 
-b:Box("Audio Trolling:","string",function(value)
-    local soundId = value
+ExampleTab:TextBox("Audio Trolling:", function(text)
+	local soundId = text
 	
 	local properties = {
 		Pitch = 1,
@@ -139,15 +121,38 @@ b:Box("Audio Trolling:","string",function(value)
 	localSound:Destroy()
 end)
 
-c:Button("Infinite Yield",function()
-    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+ExampleTab:Toggle("Auto Time Farm", function(state)
+	if state then
+		Toggle = true
+		while Toggle do
+	    	wait()
+	    	Teleport(game:GetService("Workspace").Win.CFrame)
+	    	wait()
+	    	Teleport(game:GetService("Workspace").Win2.CFrame)
+    	end
+	else
+		Toggle = false
+	end
 end)
 
-c:Label("Call: +6019-241 2392",{
-    TextSize = 14;
-    TextColor = Color3.fromRGB(255,255,255);
-    BgColor = Color3.fromRGB(65,65,65);
-    
-})
+ExampleTab:Button("Infinite Yield", function()
+	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
 
-c:DestroyGui()
+ExampleTab:Button("Close UI", function()
+	game.CoreGui.UILib:Destroy()
+end)
+
+ExampleTab:Label("", "Call:+6019-241 2392")
+
+ExampleTab:DropDown(">Time Sky<", {"Early Day", "Day", "Evening", "Night"}, function(text)
+	if text == "Early Day" then
+		game.Lighting.ClockTime = 0
+	elseif text == "Day" then
+		game.Lighting.ClockTime = 7
+	elseif text == "Evening" then
+		game.Lighting.ClockTime = 14
+	elseif text == "Night" then
+		game.Lighting.ClockTime = 19.50
+	end
+end)
