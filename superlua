@@ -80,6 +80,8 @@ ExampleTab:Button("Shift To Run", function()
 end)
 
 ExampleTab:Button("Sword Teleport", function()
+	game.Players.LocalPlayer.Character.Humanoid.Health = 0
+ 	wait(2)
 	Teleport(game:GetService("Workspace").Sword.Part.CFrame)
 end)
 
