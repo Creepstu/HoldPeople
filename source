@@ -15,17 +15,17 @@ ExampleTab:Button("Lower Lag", function()
 	end
 
 	local function removePartsWithPointLight(parent)
-    for _, child in ipairs(parent:GetChildren()) do
-        if child:IsA("Part") then
-            local pointLight = child:FindFirstChildOfClass("PointLight")
-            if pointLight then
-                child:Destroy()
-            elseif child.Material == Enum.Material.Neon then
-                child.Material = Enum.Material.Plastic
-            end
-        end
-        removePartsWithPointLight(child)
-    end
+        	for _, child in ipairs(parent:GetChildren()) do
+        		if child:IsA("Part") then
+            			local pointLight = child:FindFirstChildOfClass("PointLight")
+            			if pointLight then
+                			child:Destroy()
+            			elseif child.Material == Enum.Material.Neon then
+                			child.Material = Enum.Material.Plastic
+            			end
+        		end
+        		removePartsWithPointLight(child)
+    		end
 	end
 
 	removePartsWithPointLight(workspace)
@@ -34,7 +34,7 @@ ExampleTab:Button("Lower Lag", function()
 	game:GetService("Lighting").GlobalShadows = false
 end)
 
-ExampleTab:Button("Remove All Tools", function()
+ExampleTab:Button("Clear Backpack", function()
 	local getchi = game.Players.LocalPlayer.Backpack
    	for i, v in pairs(getchi:GetChildren()) do
    		v:Destroy()
@@ -138,120 +138,63 @@ ExampleTab:Toggle("Auto Time Farm", function(state)
 end)
 
 ExampleTab:Button("Silent Time Farm", function()
-    local player = game:GetService("Players").LocalPlayer
-
-local shop = player.PlayerGui.Shop
-
-local head = player.Character:WaitForChild("Head")
-
- 
-
-local function touchInterestAction(part)
-
-    firetouchinterest(head, part, 0)
-
-    wait()
-
-    firetouchinterest(head, part, 1)
-
+	local player = game:GetService("Players").LocalPlayer
+	local shop = player.PlayerGui.Shop
+	local head = player.Character:WaitForChild("Head")
+	local function touchInterestAction(part)
+	firetouchinterest(head, part, 0)
+	wait()
+	firetouchinterest(head, part, 1)
 end
-
- 
 
 local updateTimeLabel = shop:FindFirstChild("UpdateTime")
-
 if updateTimeLabel then
-
-    updateTimeLabel:Destroy()
-
+	updateTimeLabel:Destroy()
 end
-
- 
 
 local GC = getconnections or get_signal_cons
 
 if GC then
-
     for i,v in pairs(GC(player.Idled)) do
-
         if v["Disable"] then
-
             v["Disable"](v)
-
         elseif v["Disconnect"] then
-
             v["Disconnect"](v)
-
         end
-
     end
-
 else
-
     player.Idled:Connect(function()
-
         local VirtualUser = game:GetService("VirtualUser")
-
         VirtualUser:CaptureController()
-
         VirtualUser:ClickButton2(Vector2.new())
-
     end)
-
 end
-
- 
 
 while true do
-
     wait()
-
     local leaderstats = player:FindFirstChild("leaderstats")
-
     if leaderstats then
-
         local timeStat = leaderstats:FindFirstChild("Time")
-
         if timeStat then
-
             local timeLabel = shop.Gradient.Amount
-
             timeLabel.Text = "Time: " .. tostring(timeStat.Value)
-
         end
-
     end
-
- 
 
     for _, descendant in pairs(workspace.Win:GetDescendants()) do
-
         if descendant.Name == "TouchInterest" and descendant.Parent then
-
             touchInterestAction(descendant.Parent)
-
             break
-
         end
-
     end
-
- 
 
     for _, descendant in pairs(workspace.Win2:GetDescendants()) do
-
         if descendant.Name == "TouchInterest" and descendant.Parent then
-
             touchInterestAction(descendant.Parent)
-
             break
-
         end
-
     end
-
 end
-end)
 
 ExampleTab:Button("Infinite Yield", function()
 	loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
@@ -261,7 +204,7 @@ ExampleTab:Button("Close UI", function()
 	game.CoreGui.UILib:Destroy()
 end)
 
-ExampleTab:Label("", "Call:+6019-241 2392")
+ExampleTab:Label("", "Call:+6013-285 4959")
 
 ExampleTab:DropDown(">Time Sky<", {"Early Day", "Day", "Evening", "Night"}, function(text)
 	if text == "Early Day" then
